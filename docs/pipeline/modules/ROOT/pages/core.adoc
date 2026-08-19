@@ -1,0 +1,23 @@
+= Core pipeline
+
+
+[cols="a,a,a", frame=none, grid=none]
+|===
+| image::https://img.shields.io/badge/version-%E2%89%A524.04.2-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io[]
+| image::https://img.shields.io/badge/nf--core_template-3.3.1-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re[]
+| image::http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda[conda]
+|===
+
+Steps to generate data for the G-nom core analyses are bundled in the core pipeline. It currently includes the following tools:
+
+. RepeatMasker
+. BUSCO
+
+fCat and taXaminer are not yet included pending a bioconda release.
+
+The core pipeline is not executed by G-nom itself but designed to run in a separate HPC environment (it is generally advisable to isolate compute clusters from web-facing applications). The pipeline uses https://www.nextflow.io/[nextflow] and is built on top of https://nf-co.re/[nf-core]. Nextflow supports all major HPC schedulers, including e.g. SLURM and LSF and can be set up in a few minutes. Nf-core provides a common style for the development of nextflow pipelines. The environments required to run the various tools are set up using conda. 
+
+Further usage instructions can be found in the https://github.com/G-nom-Project/corepipeline[repository]. Please report issues in the pipeline repository rather then the main G-nom repository.
+
+== Automatic import
+Future versions of G-nom will include HTTP endpoints to automate the import of pipeline outputs. For progress, check the https://github.com/G-nom-Project/g-nom/issues/2[issue] on Github.

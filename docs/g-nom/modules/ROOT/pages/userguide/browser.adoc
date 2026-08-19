@@ -1,0 +1,20 @@
+= Using the genome browser
+
+.The genome browser for _GCA_911387925.2_
+[#browser,caption="Screenshot 1: "]
+image::browser.png[Browser]
+
+
+G-nom integrates a fully featured genome browser powered by https://jbrowse.org/jb2/[JBrowse2]. G-nom automatically generates track configs for all genomic annotations and mappings uploaded for a given assembly. Tracks use the names provided on link:imports.html[import]. G-nom also generates https://www.htslib.org/doc/tabix.html[tabix] indices automatically, enabling full-text search of annotation and mapping feature i.e. by their feature IDs.
+
+You can find the browser under the URL `/browser` or by following the link in the navbar. Upon loading the page, you will be prompted to select one of the assemblies stored in G-nom. Once you click "Launch Browser", you will be re-directed to a page with a pre-populated JBrowse genome browser. Alternatively, the link:assembly_page.html[assembly page] provides a button in the "Genome Browser" section to jump to pre-populated JBrowse genome browser for the assembly instantly.
+
+For further usage instruction, please refer to the https://jbrowse.org/jb2/docs/[Jbrowse2 Documentation].
+
+== Data access
+Genome Browser tracks inherit the access policy enforced by their associated assembly. G-nom will throw a 403 Error when users try to access data they are not permitted to read.
+
+== Session persistence
+TIP: JBrowse allows you to store and load sessions in `.json` files, requiring you to download / upload them from your device.
+
+G-nom currently does not store sessions server-side. This is subject to change in a future update.

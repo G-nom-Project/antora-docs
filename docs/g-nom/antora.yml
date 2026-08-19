@@ -1,0 +1,5 @@
+name: g-nom
+version: ~
+title: G-nom Docs
+nav:
+- modules/ROOT/nav.adoc

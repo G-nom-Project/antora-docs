@@ -1,0 +1,6 @@
+= User roles
+G-nom users are organized into different roles to control access an editing of data. *Global* roles apply instance-wide:
+. *Members:* All users of G-nom are considered members, with the ability to view and bookmark public assemblies. Members can be added to Collections.
+. *Contributors:* These users inherit all permission of the member role with the addition of being able to upload and alter their own data.
+. *Adminstrators:* Instance administrators with the power to change system settings and add/alter/remove data across the entire G-nom Instance.
+

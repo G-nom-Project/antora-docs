@@ -1,0 +1,161 @@
+= Installation
+
+G-nom consist of a variety of different software components, many originally from the Laravel ecosystem. It is recommended to install G-nom using the provided `docker-compose.yml`:
+
+.Recommended compose file
+[%collapsible]
+====
+.Default Docker Compose
+[source,yaml]
+----
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: php
+        container_name: app
+        restart: unless-stopped
+        tty: true
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - gnom-network
+        depends_on:
+            postgres:
+                condition: service_healthy
+        post_start:
+            - command: php artisan migrate && php artisan config:cache
+
+    horizon:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: php
+        container_name: horizon
+        restart: unless-stopped
+        working_dir: /var/www
+        command: php artisan horizon
+        volumes:
+            - ./:/var/www
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        depends_on:
+            postgres:
+                condition: service_healthy
+            app:
+                condition: service_healthy
+            redis:
+                condition: service_started
+        networks:
+            - gnom-network
+
+    redis:
+        image: redis:7-alpine
+        container_name: redis
+        restart: unless-stopped
+        networks:
+            - gnom-network
+        volumes:
+            - redis_data:/data
+
+    reverb:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: php
+        container_name: reverb
+        restart: unless-stopped
+        working_dir: /var/www
+        command: php artisan reverb:start
+        ports:
+            - 8080
+        volumes:
+            - ./:/var/www
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        depends_on:
+            postgres:
+                condition: service_healthy
+            app:
+                condition: service_healthy
+        networks:
+            - gnom-network
+
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "80:80"
+            - "8080:8080"
+            - "443:443"
+        volumes:
+            - ./:/var/www
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - gnom-network
+        depends_on:
+            app:
+                condition: service_healthy
+
+    postgres:
+        image: postgres:16-alpine
+        container_name: postgres
+        environment:
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            PGUSER: ${DB_USERNAME}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        restart: unless-stopped
+        networks:
+            - gnom-network
+        healthcheck:
+            test: ["CMD-SHELL", "sh -c 'pg_isready -d ${DB_USERNAME}'"]
+            interval: 10s
+            timeout: 3s
+            retries: 3
+
+    qlever:
+        build:
+            context: .
+            dockerfile: qlever.Dockerfile
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./storage/app/vault/qlever:/index
+        ports:
+            - 8888
+        environment:
+            ACCESS_TOKEN: <TOKEN>
+        networks:
+            - gnom-network
+
+networks:
+    gnom-network:
+        driver: bridge
+
+volumes:
+    postgres_data:
+    redis_data:
+----
+====
+
+As you may have noticed, G-nom uses NGINX as it's forward-facing webserver. The required NGINX config files are included in the `/nginx` folder. The `app` configuration handled the web user interface while the `reverb` configuration handles the websockets required for real-time notifications.
+
+The QLever server included in this compose file is optional, if you wish to run G-nom without the knowledge graph.
+
+== Installing dependencies
+TODO
+
+== Laravel setup
+TODO: APP KEY generation
+
+== ENV file
+The supplied `.env.example` file is adapted to the default docker compose and only requires changes to the `APP_KEY`, `APP_URL` and `MAIL` fields.
+

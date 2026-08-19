@@ -1,0 +1,5 @@
+name: g-nom-pipeline
+version: ~
+title: G-nom Pipeline
+nav:
+- modules/ROOT/nav.adoc

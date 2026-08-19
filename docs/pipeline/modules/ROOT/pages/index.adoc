@@ -1,0 +1,3 @@
+= G-nom Pipelines
+
+In order to streamline data generation for G-nom serveral prototype pipelines are available.

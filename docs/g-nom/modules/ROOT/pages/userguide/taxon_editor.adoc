@@ -1,0 +1,49 @@
+= The taxon editor
+:category: User Interface
+
+.The taxon editor for _Apis mellifera_
+[#taxon_editor,caption="Screenshot 1: "]
+image::taxon-editor.png[Browser]
+
+
+The taxon editor allows you to add additional information to annotate your taxa. This includes info texts, images, minimalist icons and arbitrary GeoJSON data (e.g. occurrence maps).
+
+== Changing the taxon image
+
+.The taxon image editor for _Apis mellifera_
+[#image_editor,caption="Screenshot 2: "]
+image::taxon-img-editor.png[Image Editor]
+
+TIP: Per default, G-nom will attempt to embed a relevant image from wikimedia if no image was uploaded. Once uploaded, G-nom will switch to the new picture.
+
+Clicking the "Edit Taxon Image" Button open the dialogue seen on the right. Here you can upload a new taxon image and provide the copyright information which will be display below the image on corresponding link:assembly_page.html[assembly pages].
+
+Below you will find the section to upload a taxon icon. A taxon icon is a small SVG-file which is displayed next to the species name on the assembly page. The https://www.phylopic.org/[phylopic] website is a great starting point for finding relevant SVGs.
+
+== Editing info texts
+
+TIP: Per default, G-nom will attempt to load relevant texts from wikidata. Once you update save the new info text, this previous text will be replaced.
+
+For each taxon, two info texts are available, which can be edited in the text fields on the left hand side of the editor. The first edits the headline text, a short text which will be displayed on link:assembly_card.html[assembly cards]. The second edits the longer info text displayed on assembly pages.
+
+== Editing Geodata
+
+.The geodata editor for _Apis mellifera_
+[#geo_editor,caption="Screenshot 3: "]
+image::taxon-geo-tab.png[Geo Editor]
+
+WARNING: G-nom itself does not validate GeoJSON strings. It is recommended to check your data using website like https://geojson.io/[geojson.io] prior to importing it.
+
+The Geodata editor is available in a tab next to the taxon image along side a worldmap previewing currently available data. G-nom supports arbitrary geodata in the GeoJSON format, including single-location "pins" as well as polygon surfaces.
+
+All geodata object imported are required to have a title for easier identification. This title is displayed in the overview table upon click in the world map.
+
+The following fields are available when adding new geodata:
+
+- **Name:** This is the aforementioned title which will be displayed when users click on the geodata object in the world map.
+- **Type:** This is an optional field, designed to differentiate between different categories of metadata e.g. "occurrence". :material-account-hard-hat-outline: G-nom may enforce strict categories in the future.
+- **Description:** The description is optional and will be displayed alongside the name in a pop-up bubble when users click on the geodata object.
+- **Source:** Allows users to link a relevant datasource or publication.
+- **Data link:** If you wish to link GeoJSON from external sources directly, it is sufficient to paste the link here. This is useful for data sources which are updated regularly, for example GBIF's species occurrence maps.
+- **Raw data:** If you wish to store the geodata directly on the G-nom server itself, you can copy+paste your GeoJSON here. This option is mutually exlusive with the Data link source.
+

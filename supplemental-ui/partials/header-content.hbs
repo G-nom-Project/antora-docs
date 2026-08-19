@@ -1,0 +1,33 @@
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <span class="icon">
+           <img src="https://github.com/G-nom-Project/g-nom/blob/main/public/images/gnom.png?raw=true"></img>
+        </span>
+        <a href="https://g-nom.bio"> G-nom</a>
+        <span class="separator">//</span>
+        <a href="{{or site.url (or siteRootUrl siteRootPath)}}">Docs</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Projects</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>Core</strong></div>
+            <a class="navbar-item" href="https://github.com/G-nom-Project/g-nom">Repository</a>
+            <hr class="navbar-divider">
+            <div class="navbar-item"><strong>Pipeline</strong></div>
+            <a class="navbar-item" href="https://github.com/G-nom-Project/corepipeline">Repository</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

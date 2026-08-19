@@ -1,0 +1,32 @@
+= Jobs
+
+While most of the UI interactions of G-nom are performed immediately, compute-intensive tasks such as the BLAST queries or data imports are delegated to jobs running in a queue. 
+Jobs are split across a *default* and *long* queue depending on the job type and expected runtime. 
+BUSCO imports, for example, consist of a simple parser reading the BUSCO summary file and run on the default queue.
+Assembly imports, on the other hand, require compression, indexing and computation of key metrics and therefore run on the long queue with an extended timeout.
+You may inspect your jobs by navigating to `https://<your-g-nom-instance>/jobs`.
+
+.The Jobs page displaying a series of completed, short-running BUSCO import jobs.
+[#landing-page,caption="Screenshot 1: "]
+image::jobs.png[G-nom Landing Page]
+
+== Job Types
+NOTE: Not all of these job types are available to all users.
+
+.Table Overview of Job Types
+|===
+|Job Type |Description |Queue
+
+|BLAST
+|Runs a BLAST query against the internal database
+|`long`
+
+|Assembly import
+|Adds a genome assembly to the G-nom dataset and computes key metrics
+|`long`
+
+|BUSCO import
+|Adds the results of a BUSCO analysis to an assembly
+|`default`
+
+|===

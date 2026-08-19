@@ -1,0 +1,46 @@
+= The assembly page
+:category: User Interface
+
+The first section of the assembly page is made up of a grey band detailing scientific name and the custom name of the assembly. A silouette of the species can be supplied via SVG at source e.g. from Phylopic. The bookmark button is located here as well.
+
+The first section below the band details taxon specific information. These include an image, scientific and common names as well a short header text and longer info text. A second tab displays user-provided geodata on a world map. Image, text and geodata are customizable through the taxon editor. The complete NCBI lineage is displayed in a separate field, derived from the taxdump imported into G-nom.
+
+For users authorized to edit the assembly and/or taxa, the import dialogues and taxon editor are accessible through blue buttons in the top bar.
+
+The remainder of the page is made up of four collapsible sections, which will be discussed in detail below:
+
+. Assembly Information
+. Annotation completeness
+. Taxonomic classification
+. Genome Browser
+
+== Assembly Information
+
+The assembly information sections contains G-nom internal information as well common quality metrics and statistics. This includes sequence and contig size statistics as well as N50 and GC content. To assess the completeness of the assembly / related annotation, please check out the BUSCO and fCAT results in the next section.
+
+== Annotation completeness
+
+The annotation completeness section presents visualizations for BUSCO and fCAT results. The plot differentiates between Complete (Single-copy), Complete (Duplicated), fragmented and missing. Please refer to the documentation of the underlying tools (BUSCO | fCat) for guidance on how to interpret the results.
+
+== Repeatmasker
+
+RepeatMasker genome assemblies for interspersed repeats and low complexity DNA sequences. Repeatmasker outputs a breakdown of repeats / low complexity regions as fractions of the entire genome which is available as a visualization in G-nom. Repeatmasker data for G-nom can generated automatically using the core pipeline. The output is broken down into the following categories:
+
+Simple repeats: Duplications of simple sets of DNA bases (typically 1-5bp) such as A, CA, CGG etc.
+* Low complexity
+* SINEs: Non-functional copies of RNA genes which have been reintegrated into the genome with the assitance of a reverse transcriptase
+* LINEs: Non-Retrovirus Retrotransposons
+* LTR elements: Long terminal repeats
+* DNA elements
+* Rolling-circles
+* Small RNA
+
+== Taxonomic assignment
+
+TIP: The taXaminer-dashboard project is currently being re-structured to be published as a singular react component. This feature should be considered unstable until the migration is complete.
+
+The taxonomic assignment section includes the complete dashboard for the visualization of taXaminer results. Additionally, it integrates with you G-nom account and the genome browser.
+
+== Genome Browser
+
+The genome browser section embeds a smaller version of the JBrowse genome browser. Per default, all available tracks will be loaded. It links to selected genes in the taXaminer dashboard, allowing you to explore the genomic neighbourhood. For detailed investigation of browser tracks, consider using the Full-screen browser.

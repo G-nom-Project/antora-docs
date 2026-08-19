@@ -1,0 +1,13 @@
+.User Guide
+* xref:userguide/sign-up.adoc[]
+* xref:userguide/roles.adoc[]
+* xref:userguide/jobs.adoc[]
+* xref:userguide/data-hierarchy.adoc[]
+* xref:userguide/imports.adoc[]
+* xref:userguide/taxon_editor.adoc[]
+* xref:userguide/assembly_page.adoc[]
+* xref:userguide/browser.adoc[]
+
+.Administration Guide
+* xref:adminguide/installation.adoc[]
+* xref:adminguide/horizon.adoc[]

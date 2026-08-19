@@ -1,0 +1,3 @@
+= Laravel Horizon
+
+G-nom uses horizon to power long-running jobs and background processes. Depending on the hardware available, you may increase or decrease the default number of worker for the queues defined in `config/horizon.php`.

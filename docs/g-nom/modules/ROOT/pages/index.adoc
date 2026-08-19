@@ -1,0 +1,7 @@
+= G-nom
+
+G-nom is web-based plattform for the storage, visualization and exploration of genome assemblies and associated analyses and metadata.
+
+.The G-nom Landing Page
+[#landing-page,caption="Figure 1: "]
+image::gnom_landing.png[G-nom Landing Page]

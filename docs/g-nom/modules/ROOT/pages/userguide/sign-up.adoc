@@ -1,0 +1,6 @@
+= Signing up
+
+G-nom supports self-signup using the registration form found at `https://<your-g-nom-instance>/register`. Newly created users are assigned the `member` role and may only access *public* data.
+
+NOTE: Enabling/Disabling self-signup is at the discretion of the instance administrator. If the registration page is unavailable, please contact your administrator to manually create your account.
+
