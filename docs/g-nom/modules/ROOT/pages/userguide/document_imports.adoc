@@ -1,0 +1,30 @@
+= Importing documents
+
+WARNING: The documents uploaded to G-nom are available to all users of the G-nom instance. Therefore, your uploads must always comply with copyright and data governance regulations of your organization.
+
+In addition to genomic research data, G-nom supports the import of arbitrary research documents. The most common use case is papers related to the project using a specific G-nom instance. Documents are uploaded into G-nom in .pdf format and stored alongside the genomic research data.
+
+.The user interface for importing documents
+[#import-ui,caption="Screenshot 1: "]
+image::upload-document.png[Assembly Card]
+
+During the import, G-nom converts the documents to TEI using GROBID. The TEI data is then used to extract key information such as title, abstract, authors, DOI and references from the document. A database record for the document is created in the G-nom database. The main text of the document is broken down into chunks of text and an embedding model is used to store them in a vector storage. The vector storage allows both users and AI agents to utilize semantic search to retrieve documents of interest.
+
+.Overview of Retrieval-augmented Generation in G-nom
+[#diagram-import,caption="Figure 1: "]
+[mermaid]
+....
+flowchart LR
+    subgraph Data preparation
+    A@{ shape: documents, label: "Research Papers" } -->|GROBID| B(Text chunks)
+    B --> |Embedding|C[(Vector storage)]
+    end
+    subgraph User Interaction
+    D(User) --> |Prompt|E(LLM)
+    E --> |Formulate and embed|F(Query)
+    F --> |Similarity search|C
+    C --> |Retrieve documents|F
+    F --> |Documents|E
+    E --> |Answer|D
+    end
+....

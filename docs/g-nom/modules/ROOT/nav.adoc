@@ -4,9 +4,16 @@
 * xref:userguide/jobs.adoc[]
 * xref:userguide/data-hierarchy.adoc[]
 * xref:userguide/imports.adoc[]
+
 * xref:userguide/taxon_editor.adoc[]
 * xref:userguide/assembly_page.adoc[]
+
+* AI integration
+** xref:userguide/agents.adoc[]
+** xref:userguide/document_imports.adoc[]
+
 * xref:userguide/browser.adoc[]
+
 
 .Administration Guide
 * xref:adminguide/installation.adoc[]
