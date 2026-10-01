@@ -1,0 +1,62 @@
+= AI integration
+
+G-nom offers native support for LLMs to improve interactive research. LLM's have access to a variety of Tools, allowing them to access contents of the G-nom database. The access restrictions of the user currently conversing with the agent apply. These agents can either be powered by one central LLM, managed by the G-nom instance administrator, or on a per-user basis with an external provider and API key (**B**ring **Y**our **O**wn **M**odel).
+
+== Enabling the AI interface
+
+AI features are disabled by default and can be enabled by setting the corresponding variable in the `.env` file:
+
+[source,yaml]
+----
+GNOM_AGENTS_ENABLED=true
+GNOM_AGENTS=byom+internal
+----
+
+The `GNOM_AGENTS` variable controls whether users can bring their own API keys or are limited to an internal model managed by the instance administrator. Allowed values are `byom`, `internal` and `byom+internal`.
+
+== Configuring an internal language model
+
+You can specify individual providers in the `config/ai.php` file. Stub configurations for major providers or local solutions are provided. Once a provider is configured set
+
+[source, php]
+----
+'default' => 'local',
+----
+
+== Tool Routing
+TIP: Tool routing is optional but highly recommended unless you own the inference infrastructure or have excellent pricing ($ per Million tokens) from your provider.
+
+Agents need to be aware of tool in order to be able to use them. Tool metadata is included in every prompt to facilitate this. As the number of tools increases so does the amount of tokens consumed solely by their metadata even when the tool is not executed.
+
+
+Tool routing mitigates this over-consumption of tokens by limiting the tools included in the prompt based on the current user query and recently used tools. To infer required tokens from the user prompt, G-nom can utilize a smaller and cheaper model compared to the model powering the user assistant.
+
+Tool routing is configured through three variables in the `.env` file:
+
+- `AI_TOOL_ROUTING`: set to `true` to enable tool routing
+- `AI_TOOL_ROUTING_PROVIDER`: Select the LLM provider to use for tool routing. The provider does not necessarily have to be the same as the default LLM provider.
+- `AI_TOOL_ROUTING_MODEL`: Select the model to use for tool routing from user queries.
+
+
+
+
+== Configuring an embedding model
+
+G-nom requires an embedding model for document-based RAG. The embedding model is used to transform arbitrary text snippets into n-dimensional vectors enabling agents to perform semantic similarity searches to obtain information.
+When uploading documents to the vector store, G-nom will split text into chunks of a set token site bounded by the settings below. The `result` variable controls the dimensions of the output vector. These parameters differ based on the model used and need to be adjusted accordingly.
+
+[source, php]
+----
+    'context_sizes' => [
+        'embeddings' => [
+            'max' => 512,
+            'target' => 500,
+            'min' => 100,
+            'result' => 1024,
+        ]
+    ],
+----
+
+WARNING: The `result` variable also controls the fixed vector size in the corresponding database table. Changes to this configuration should be performed before G-nom is started up for the first time. Later changes to the `result` setting may require you to re-run the database migrations for the affected tables.
+
+== Configuring GROBID
