@@ -18,3 +18,4 @@
 .Administration Guide
 * xref:adminguide/installation.adoc[]
 * xref:adminguide/horizon.adoc[]
+* xref:adminguide/ai.adoc[]
