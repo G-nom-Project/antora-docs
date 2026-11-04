@@ -10,12 +10,20 @@
 
 * AI integration
 ** xref:userguide/agents.adoc[]
+** xref:userguide/mcp.adoc[]
 ** xref:userguide/document_imports.adoc[]
 
+* xref:userguide/tokens.adoc[]
 * xref:userguide/browser.adoc[]
 
 
 .Administration Guide
 * xref:adminguide/installation.adoc[]
 * xref:adminguide/horizon.adoc[]
-* xref:adminguide/ai.adoc[]
+* xref:adminguide/dashboard.adoc[]
+* xref:adminguide/users.adoc[]
+* AI integration
+** xref:adminguide/ai.adoc[]
+** xref:adminguide/nativeai.adoc[]
+** xref:adminguide/mcp.adoc[]
+** xref:adminguide/librechat.adoc[]

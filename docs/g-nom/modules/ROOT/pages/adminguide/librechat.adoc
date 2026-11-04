@@ -1,0 +1,28 @@
+= Librechat for G-nom
+
+TIP: Librechat provides a more complete user experience compared to G-nom's builtin interface.
+
+link:https://www.librechat.ai/[LibreChat] is an open-source, self-hostable AI chat application that serves as a unified interface for multiple AI models. Librechat is well-suited to provide users with a more mature AI interface than G-nom currently offers, without imposing the requirement to set up custom endpoints or MCP servers for each user. Librechat can be deployed using docker on the same host as G-nom and connects via G-nom's link:mcp.html[MCP server].
+
+== Setting up a global MCP
+
+TIP: Set `GNOM_MCP_ENABLED=true` to enable G-nom's MCP server.
+
+Librechat allows users to share ressources like agents, tools or MCP servers between each other. You can configure a new G-nom MCP in the UI with the following settings:
+
+* MCP Server URL: `http(s)://<your G-nom instance>/mcp/data`
+* Transport: Streamable HTTPS
+* Authentication: API Key
+* API Key: Either a global read-only API key or personal key added by users
+
+If you add an API key during the setup, users gain access to G-nom with the read rights of the token creator. This is useful i.e. with a service account with access to all public assemblies. If your prefer personal keys, select the "Each user provides their own key" option. Users will be prompted for a link:../userguide/tokens.html[personal access token] the first time they use the MCP server.
+
+.Creation of a G-nom MCP in the Librechat UI
+[#health,caption="Screenshot 1: "]
+image::librechat-mcp.png[Librechat MCP]
+
+After creating the MCP server, click the "Share" Button in the lower left corner and select "Share with everyone". The G-nom MCP will now be available to every user in the corresponding sidebar section. Optionally, you can disable the built-in AI interface of G-nom by setting `GNOM_AGENTS_ENABLED=false` in your `.env` file.
+
+== Setting up global agents
+
+The global G-nom MCP server is sufficient to allow users to interact with G-nom data through LLMs. If you wish to personalize the interactions further, you may create a dedicated G-nom agent and share it with everyone in a similar manner to the MCP Server. Make sure to add the G-nom MCP as a tool in the "Tools" section of the agent creation wizard.

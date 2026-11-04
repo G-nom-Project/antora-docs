@@ -1,0 +1,13 @@
+= User management
+
+You can manually create, edit or lock user account from the admin interface (`/admin`). In order to register a new users, you need a name, e-mail address and default password.
+
+== Locking user accounts
+
+Data uploaded into G-nom is always tied to a user account following G-nom's strong data provenance policy. Therefore, locking user accounts is preferred over deleting them, potentially corrupting the chain of provenance for data.
+
+Locked accounts have all their login credentials and API tokens revoked. Users with locked accounts are no longer able to log into G-nom but the data they contributed remains. 
+
+== Impersonating user accounts
+
+The impersonation feature allows you to interact with G-nom the same way the targeted user account would. This feature is designed to make it easier for instance administrators to provide technical assistance to users.

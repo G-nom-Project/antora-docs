@@ -1,0 +1,53 @@
+= MCP Server
+
+[TIP]
+====
+*Why does G-nom provide both a built-in AI assistant and a MCP Server?*
+
+While G-nom's AI interface covers some of the most useful features, keeping up with a rapidly evolving community and industry is not sustainable long-term. Features like tool routing replace services usually provided by AI providers in order to keep G-nom provider-agnostic. The MCP approach maintains the core strength of G-nom's AI integration, the interaction with data through tools, but places the burden of developing the environment in which users interact with AI agents on third parties.
+====
+
+The Model Context Protocol (MCP) allows you to connect arbitrary AI client software to G-nom, exposing the same suite of tools available to the built-in AI assistant. This allows you to include data from a G-nom instance into your own AI workspaces and workflows.
+
+== Configuration
+
+WARNING: Connecting a third-party application to the G-nom MCP exposes research data stored on the G-nom server to your LLM provider. Only use trusted providers which comply with your organisation's data governance rules.
+
+When connecting to the G-nom MCP server, you are connecting to remote HTTP-streamable server, which is not natively supported by all AI clients (yet). In these cases a bridge driver like https://www.npmjs.com/package/mcp-remote[`mcp-remote`] is needed, requiring the prior installation of Node.js. The following table is non-comprehensive list of tools tested with the G-nom MCP either with or without a bridge driver. Please not that this table might be outdated at the time of reading and verify information with the documentation of your provider before proceeding.
+
+.Desktop AI clients
+|===
+|Software |Provider|Type |MCP over HTTP 
+
+|Claude Desktop
+|Anthropic
+|proprietary
+|via https://www.npmjs.com/package/mcp-remote[`mcp-remote`]
+
+|Claude Code
+|Anthropic
+|proprietary
+|via https://www.npmjs.com/package/mcp-remote[`mcp-remote`]
+
+|ChatGPT Desktop
+|OpenAI
+|proprietary
+|✅
+
+|Codex
+|OpenAI
+|proprietary
+|✅
+
+|LibreChat
+|LibreChat
+|open-source
+|✅
+|===
+
+In order to connect, you also need to create an API-token in your personal dashboard with `read` permissions. Enter this token when asked for an authentication / bearer token during the MCP server setup.
+
+== Usage
+G-nom's integrated AI assistant is instructed to use G-nom tools whenever applicable and has no access to further tools, making tool usage fairly consistent. This may not be the case for the agent running in your personal AI workspace which has different system prompts and likely access to more tools or even the open internet. As such, you may have to explicitly instruct your agent to use G-nom tools for certain tasks, a setting which depending on provider can also be stored in user prompts / memory. A set of G-nom skills will be published at a later date to adresse these issues as well.
+
+Every major AI client visually indicates tool usage and tool results, allowing you to check if G-nom MCP tools were used appropriately.
