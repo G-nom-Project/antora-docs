@@ -1,0 +1,6 @@
+= G-nom MCP Server
+
+G-nom ships with an MCP server, allowing external AI tools to interact with data in G-nom. This allows users to use advanced feature like memory or carry over context from works previous to their use of G-nom. Deploying the servers is very straighforward, simply enable `GNOM_MCP_ENABLED=true`. To access the MCP server, users need to create a link:../userguide/tokens.html[personal access token] first. For read-only scopes you can simplify this by creating a single read-scoped token and distributing it to users. This also works well with a link:librechat.html[Librechat] setup.
+
+
+The MCP server URL is `<your G-nom instance>/mcp/data`

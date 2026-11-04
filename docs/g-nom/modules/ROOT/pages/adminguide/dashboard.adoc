@@ -1,0 +1,58 @@
+= Admin dashboard
+
+The adminstration dashboard located under `/admin` allows you to monitor your G-nom instance, add/edit/lock user accounts and perform routine maintenance.
+
+== System Health
+
+.The system health overview
+[#health,caption="Screenshot 1: "]
+image::system_health.png[System Health]
+
+The system health section provides an overview of the state of G-nom's core components. In a typical deployment using `docker-compose` each component is running in it's own container.
+G-nom utilizes the various health check endpoints exposed by the components and condenses them into this overview. The number of signals evaluated differs between components.
+
+.Health-Check Components
+[cols="1,2,1,2"]
+|===
+|Component | Description | Warning | Failed
+
+|PostgreSQL
+|Relational database storing system / analysis / metadata
+|Low cache hit %
+|Database is not responding to queries
+
+|Laravel Horizon
+|Worker queues for background processes
+|Recently failed jobs
+|Supervisor is not responding to requests
+
+|Qlever
+|High performance server and query engine for RDF triples
+|-
+|Server is not responding
+
+
+|Cache
+|Cache engine (typically Redis)
+|-
+|Cache is not responding to requests
+
+|Reverb
+|Websockets for real-time messages i.e. data streaming or LLM responses
+|-
+|Reverb Host is not responding to requests
+|===
+
+== User management
+
+See the page on link:users.html[User management].
+
+== Administrative options
+
+This section allows you to dispatch routine maintenance jobs:
+
+. *Clear application cache:* Wipes the entire application cache. Since the cache is used as the queue driver for link:horizon.html[Laravel Horizon], running jobs will be lost. G-nom will likely respond slower to user queries while the cache is re-filled. Only run this action if you have cached stale data which would not expire within a resonable timeframe.
+. *Cleanup temporary files*: Removes temporary files accumulated during data imports.
+. *Refresh taxonomy:* Downloads the latest NCBI taxdump and imports it into the G-nom database. Before running this job, ensure that possible ID changes do not affect data imported into your G-nom instance.
+. *Rebuild knowledge graph:* Instructs Qlever to rebuild it's internal index. This can speed up SPARQL queries after a series of updates to the knowledge graph.
+. *Prune job history:* Removes stale user-trackable jobs from job histories.
