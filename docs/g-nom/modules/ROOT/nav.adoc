@@ -22,6 +22,9 @@
 * xref:adminguide/horizon.adoc[]
 * xref:adminguide/dashboard.adoc[]
 * xref:adminguide/users.adoc[]
+* Identity providers
+** xref:adminguide/auth/native.adoc[G-nom native]
+** xref:adminguide/auth/ldap.adoc[]
 * AI integration
 ** xref:adminguide/ai.adoc[]
 ** xref:adminguide/nativeai.adoc[]

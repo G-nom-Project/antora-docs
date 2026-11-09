@@ -1,0 +1,65 @@
+= LDAP
+
+LDAP (Lightweight Directory Access Protocol) is an open, vendor-neutral application protocol used to query, manage, and authenticate directory services over network. LDAP allows administrators to configure user authentication across many platforms at once by using a LDAP server as the central ID provider. This makes LDAP a good choice for internal G-nom instances. Your organisation may already use LDAP (e.g. OpenLDAP, Active directory) or an identity provider likely capable of offering and LDAP endpoint (e.g. authentik). G-nom offers full support for LDAP authentication and user federation. For public-facing instances it is recommended to use link:native.html[G-nom's native authentication] instead.
+
+TIP: LDAP is a particularly good choice when using link:../librechat.html[LibreChat] as the drop-in replacement for G-nom's native AI interface. It allows both platforms to authenticate against a single source of truth, eliminating the need for users to open two accounts.
+
+== Configuration
+
+LDAP is configured via variable in the .env file and only one LDAP server may be configured per G-nom instance. At minimum, the following settings are needed:
+
+. `LDAP_ENABLED`: set to `true` to enable LDAP authentication
+. `LDAP_URI`: address of the LDAP server. If you're using LDAPS, use `ldaps://<IP or URL>:<PORT>` and `ldap://` else. Note that you may have to configure G-nom to use the self-signed certificates used by LDAPS.
+. `LDAP_BASE_DN`: domain to search users in
+
+G-nom can either use the credentials entered by the user on login directly or bind through a dedicated service account. If using a service account, resolve the user name in `LDAP_BIND_DN` and provide the password via `LDAP_BIND_PASSWORD`
+
+=== Transport security
+
+There are two options to secure LDAP traffice: Using LDAPS enforcing TLS or StartTLS which upgrades an unsecury connection to a secure connection after the first handshake between G-nom and the LDAP server. To enable LDAPS, set the URI as explained above, to enable StartTLS, set `LDAP_START_TLS=true`.
+
+IMPORTANT: Using `ldap://` and `LDAP_START_TLS=false` leads to unencrypted LDAP connections with passwords passing through the network as plain text. Always use either LDAPS or StartTLS in production environments. G-nom will log critical warning everytime a user authenticates with `ldap://` and `LDAP_START_TLS=false`.
+
+When LDAPS is used, G-nom will verify the certificate of the LDAP server using the certificate of the CA which signed it, stored in `LDAP_CA_CERT=/path/to/cert`. You can disable this behaviour by setting `LDAP_VERIFY_CERT=false`.
+
+IMPORTANT: With `LDAP_VERIFY_CERT=false`, G-nom will encrypt LDAP request but cannot differentiate between the genuine LDAP server and a man-in-the-middle attack. This options is purely intended for the debugging of LDAP settings and should no be used in productions.
+
+=== Attribute Mapping
+
+G-nom will bind user accounts using the attribute specified in as ``LDAP_USERNAME_ATTR`` (default: uid) and pull name and email address via `LDAP_EMAIL_ATTR=mail` and `LDAP_NAME_ATTR=cn`. These are attributes commonly used by LDAP servers. Override these defaults using the environment variables if your LDAP Server configuration deviates from this schema.
+
+=== Filtering users
+
+Per default, G-nom will permit login for all users in the configured `LDAP_BASE_DN`. If you wish to narrow this down by group membership or attribute filters, you can do so by providing filters in LDAP syntax / group name via `LDAP_USER_FILTER` and `LDAP_REQUIRED_GROUP`. Membership attributes vary between LDAP server software, G-nom supports the following:
+
+.Possible group membership filters
+|===
+|Filter |Description | LDAP server
+
+|`memberof`
+|user has a memberOf attribute
+|Active Directory, OpenLDAP with memberof overlay, LLDAP
+
+|`ad_nested`
+|Filter groups and nested groups
+|Active directory
+
+|`member`
+|group is groupOfNames/groupOfUniqueNames with member=<userDN>
+|Generic, LLDAP
+
+|`memberuid`
+|group is posixGroup with memberUid=<username>
+|Generic
+
+|===
+
+== Account Federation
+
+When a user first logs in with valid LDAP credentials, a user account is created in the G-nom database utilizing `LDAP_EMAIL_ATTR` and `LDAP_NAME_ATTR`. The attribute set via `LDAP_USERNAME_ATTR` (usually `uid`) must be used as the username in the login maske. It is treated as immutable on the upstream server and used to identify the account in the future. The account is tagged as a federated account and indicated in the admin dashboard through a key icon. G-nom does not perform full directory syncs, meaning that accounts deleted from the LDAP will persist in G-nom (but will no longer be able to log in since authentication against the LDAP server fails). G-nom accounts locked by instance administrators remain locked regardless of changes to the upstream LDAP.
+
+== Using LDAP with/without native Authentication
+
+TIP: The first account created with self-signup is automatically assigned the admin role. Therefore, you need to register at least one account in G-nom itself. Afterwards, you can disable self-signup via `GNOM_REGISTRATION_ENABLED=false` and exclusively authenticate new users through LDAP.
+
+Since federated accounts are tagged, G-nom can differentiate between LDAP and link:native.html[G-nom native accounts], theoretically allowing you to use both methods of authentication simultaneously. This can have some benefits, since self-signup of users is easier to handle through G-nom than through common LDAP software. G-nom does not write to the LDAP server, therefore self-signup registrations are exlusively stored in G-nom's user database. Duplicate use of e-mail addresses must be avoided.
