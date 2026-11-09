@@ -1,6 +1,6 @@
 = Librechat for G-nom
 
-TIP: Librechat provides a more complete user experience compared to G-nom's builtin interface.
+TIP: Librechat provides a more complete user experience compared to G-nom's builtin interface. When using librechat, configuring link:auth/ldap.html[LDAP] might be worthwile, allowing users to use LibreChat and G-nom through the same account.
 
 link:https://www.librechat.ai/[LibreChat] is an open-source, self-hostable AI chat application that serves as a unified interface for multiple AI models. Librechat is well-suited to provide users with a more mature AI interface than G-nom currently offers, without imposing the requirement to set up custom endpoints or MCP servers for each user. Librechat can be deployed using docker on the same host as G-nom and connects via G-nom's link:mcp.html[MCP server].
 
